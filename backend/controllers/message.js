@@ -1,16 +1,60 @@
+var { DateTime } = require('luxon')
+
 module.exports = {
-  postMessage: (req, res) => {
-    console.log(req.body.message);
+  postThread: (req, res) => {
+
+    /*
+    Message body:
+    {
+      message: "string",
+    }
+
+
+    */
+    //generate timestamp
+    let createdAt = DateTime.now();
+    let insertObject = {
+      message: req.body.message,
+      timestamp: createdAt.toISO()
+    }
+    console.log(insertObject);
     //insert into DB
     if (true) {
-      return res.status(200).send(`Let's echo your message back: ${req.body.message}`);
+      return res.status(200).json(insertObject);
     }
   },
 
-  getMessages: (req, res) => {
+  getThreads: (req, res) => {
     //get messages from DB
+
+    /*
+    [
+      {
+        "id": ID,
+        "message": text,
+        "created": DateTime
+      }
+    ]
+    Sorting order?
+    Default number of threads (first 50? 100?)
+    Maybe have a param to request time intervals (begin/end), num of entries
+    */
+    let listOfMessages = [];
     if (true) {
-      return res.status(200).send("List messages (root level OP) here");
+      return res.status(200).json(listOfMessages);
     }
+  },
+
+  getThread: (req, res) => {
+      //Execute SELECT DB query for a specific thread by ID
+      let threadID = req.params.id;
+      let thread = {
+        id: threadID
+      };
+      if (true) {
+        return res.status(200).json(thread);
+      } else {
+        return res.status(404);
+      }
   }
 }
