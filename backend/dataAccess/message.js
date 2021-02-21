@@ -4,26 +4,56 @@ const db = require('../db');
 
 module.exports = {
   insertThread: (threadParent, threadChild) => {
-    //db.query();
+    /*
+    let threadParent = {
+      title: req.body.title,
+      firstCreatedAt: createdAt,
+      lastCreatedAt: createdAt
+    };
 
-    if (false) {
-      throw "Could not create new thread";
-    }
+    let threadChild = {
+      body: req.body.text,
+      timestamp: createdAt,
+      parentThreadTime: createdAt
+    };
+    */
+
+    let queryString = "";
+    db.query(queryString, (err, res) => {
+      if (err) {
+        throw "Could not create new thread";
+      }
+    });
+
   },
 
   updateThread: (threadComment) => {
-    //db.query()
-
-    if (false) {
-      throw "Could not reply to existing thread";
+    /*
+    let threadComment = {
+      body: req.body.text,
+      timestamp: createdAt,
+      parentThreadTime: req.body.parentTime
     }
+    */
+    let queryString = "";
+    db.query(queryString, (err, res) => {
+      if (err) {
+        throw "Could not reply to existing thread";
+      }
+    });
   },
 
   getThreadsByLatest: (params) => {
 
     let maxCount = params.maxCount;
-    //write query
-    let threads = [];
-    return threads;
+    let queryString = "";
+    db.query(queryString, (err, res) => {
+      if (err) {
+        throw "Could not retrieve threads.";
+      }
+      let threads = [];
+      //run map function on res.rows
+      return threads;
+    });
   }
 }
