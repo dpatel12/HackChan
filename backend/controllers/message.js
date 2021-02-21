@@ -98,8 +98,14 @@ module.exports = {
 
   getEntries: (req, res) => {
     let maxCount = 50;
-    let queryString = `SELECT * FROM comment_entry WHERE parent_init_time = ${req.body.thread_time} ORDER BY comment_time DESC LIMIT ${maxCount};`;
-    db.pool.query(queryString)
+    let threadTime = new Date(req.body.thread_time);
+    let threadComment = [
+      threadTime,
+      maxCount
+    ];
+    let queryString = `SELECT * FROM comment_entry WHERE parent_init_time = 
+    $1 ORDER BY comment_time DESC LIMIT $2;`;
+    db.pool.query(queryString, threadComment)
       .then(dbRes => {
         console.log(dbRes.rows);
         return res.status(200).json(dbRes.rows);
