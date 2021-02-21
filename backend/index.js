@@ -8,9 +8,13 @@ let app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.set('trust proxy', true);
+
 
 app.get("/*", (req, res) => {
-  res.send("Default response, hello world!");
+  req.headers['x-forwarded-for'];
+  res.send("IP FOUND: " + req.socket.remoteAddress);
+
 });
 
 app.listen(NODE_PORT, () => { console.log(`Listening on ${NODE_PORT}`)});
