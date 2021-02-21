@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import './Content.css';
-
+/*
 var arrayOfThreads =
 [
     {
@@ -17,27 +17,17 @@ var arrayOfThreads =
 ];
 
 function handleClick(input) {
-    alert(input);
+    console.log(input);
 }
 
 let buttons = arrayOfThreads.map((x) => {
     return(
-    <Button variant="light" size="lg" active block id={x.createdAt} onclick={alert(x.createdAt)}>
+    <Button variant="light" size="lg" active block id={x.createdAt} onClick={handleClick(x.createdAt)}>
         Entry: {x.title}
     </Button>);
     }
 );
-/*
-let buttons = []
 
-for (var i in arrayOfThreads) {
-    
-    buttons.push(
-        <Button variant="light" size="lg" active block id={i.createdAt}>
-            Entry: {i.title}
-        </Button>
-    );
-}*/
 
 const Content = () => {
     return (
@@ -49,4 +39,4 @@ const Content = () => {
     );
 }
 
-export default Content;
+export default Content;*/
