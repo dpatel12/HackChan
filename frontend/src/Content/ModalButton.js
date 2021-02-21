@@ -20,18 +20,22 @@ function ModalButton() {
     const [lgShow, setLgShow] = useState(false);
     const [modalTitle, setModalTitle] = useState(false);
     const [modalBody, setModalBody] = useState(false);
+    const [threadTime, setThreadTime] = useState(false);
+    const [threadNumComments, setThreadNumComments] = useState(false);
     
-    let handleClick = (e, f) =>  {
-        console.log(e);
+    let handleClick = (time, threadname, threadcommentcount) =>  {
+        console.log(time);
         setLgShow(true)
-        setModalTitle(f);
-        setModalBody(e);
+        setModalTitle(threadname);
+        setThreadTime(time);
+        setModalBody("Temp modal body");
+        setThreadNumComments(threadcommentcount);
     };
 
     let buttons = arrayOfThreads.map((x) => {
         return(
-        <Button variant="light" size="lg" active block id={x.createdAt} onClick={() => handleClick(x.createdAt, x.title)}>
-            Entry: {x.title}
+        <Button variant="light" size="lg" active block id={x.createdAt} onClick={() => handleClick(x.createdAt, x.title, x.count)}>
+            Thread: {x.title}
         </Button>);
         }
     );
@@ -49,7 +53,7 @@ function ModalButton() {
             >
                 <Modal.Header closeButton>
                 <Modal.Title id="example-modal-sizes-title-lg">
-                    {modalTitle}
+                    Thread ({threadTime}): {modalTitle} [{threadNumComments} replies]
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{modalBody}</Modal.Body>
