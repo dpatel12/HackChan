@@ -9,17 +9,18 @@ const Content = () => {
                 <Card className="text-center">
                     <Card.Header ><h2>Latest Topics</h2></Card.Header>
                     <Card.Body>
-                        <Card.Title><Button variant="secondary"><h2>odd discoveries</h2></Button></Card.Title>
+                        <Card.Title><Button variant="primary"><h2>odd discoveries</h2></Button></Card.Title>
                         <Card.Text>
                              Latest comments go here.
                          </Card.Text>
                     </Card.Body>
                     <Card.Body>
-                        <Card.Title><Button variant="secondary"><h2>Site rules:</h2></Button></Card.Title>
+                        <Card.Title><Button variant="primary"><h2>odd discoveries</h2></Button></Card.Title>
                         <Card.Text>
-                            Latest comments go here.
+                             Latest comments go here.
                          </Card.Text>
                     </Card.Body>
+
                    
                 </Card>
             </div>
