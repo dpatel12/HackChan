@@ -52,69 +52,34 @@ module.exports = {
   },
 
   getThreads: async (req, res) => {
-    //get messages from DB
-    //TODO: add support for query strings to tailor DB SELECT
-    /*
-    let range = req.query.hasOwnProperty("max") ?
-    (req.query.max < 100 ? req.query.max : 100) :
-    50;
-    */
+
     let params = {
       maxCount: 50
     }
-
-
-    /*
-    [
-      {
-        "parent":
-        {
-          "title": text,
-          "count": number,
-          "createdAt": time
-        },
-        "comments":
-        [
-          "text": text
-          "createdAt": time
-        ]
-      }
-    ]
-    Sorting order?
-    Default number of threads (first 50? 100?)
-    Maybe have a param to request time intervals (begin/end), num of entries
-    */
-    let listOfMessages = await db.getThreadsByLatest(params);
-    console.log(listOfMessages);
-    if (true) {
-      return res.status(200).json(listOfMessages);
-    }
+    db.getThreadsByLatest(params)
+      .then(listOfMessages => {
+        console.log(listOfMessages + "HEllo");
+        return res.status(200).json(listOfMessages);
+      })
+      .catch(err => {
+        console.error(err);
+      })
   },
 
-
-  /*
-  getThread: (req, res) => {
-      //Execute SELECT DB query for a specific thread by timestamp
-      let threadID = req.params.id;
-      let thread = {
-        id: threadID
-      };
-      if (true) {
-        return res.status(200).json(thread);
-      } else {
-        return res.status(404);
-      }
-  }
-  */
 
   getEntries: async (req, res) => {
     let params = {
       maxCount: 50
     }
 
-    let listOfMessages = await db.getEntriesByLatest(params, req.body.parentTime);
-    if (true) {
-      return res.status(200).json(listOfMessages);
-    }
+    db.getThreadsByLatest(params, req.body.parentTime)
+      .then(listOfMessages => {
+        console.log(listOfMessages);
+        return res.status(200).json(listOfMessages);
+      })
+      .catch(err => {
+        console.error(err);
+      })
+
   }
 }

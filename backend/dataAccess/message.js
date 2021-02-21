@@ -49,33 +49,36 @@ module.exports = {
     let maxCount = params.maxCount;
     let queryString = `SELECT * FROM comment_thread ORDER BY init_com_time DESC LIMIT ${maxCount};`;
     console.log(queryString);
-    await db.query(queryString, (err, res) => {
-      if (err) {
+
+    db.query(queryString)
+      .then(res => {
+        console.log(res.rows);
+        return res.rows;
+      })
+      .catch(err => {
         console.error(err);
         throw "Could not retrieve threads.";
-      }
-      console.log(res.rows);
-      let threads = res.rows.map(entry => entry);
+      });
 
-      //run map function on res.rows
-      return threads;
-    });
+
   },
 
   getEntriesByLatest: async (params, parent_time) => {
 
     let maxCount = params.maxCount;
     let queryString = `SELECT * FROM comment_entry WHERE parent_init_time = ${parent_time} ORDER BY comment_time DESC LIMIT ${maxCount};`;
-    await db.query(queryString, (err, res) => {
-      if (err) {
-        console.error(err);
-        throw "Could not retrieve entries.";
-      }
-      let threads = res.rows;
+    
 
-      //run map function on res.rows
-      return threads;
-    });
+    
+    db.query(queryString)
+      .then(res => {
+        console.log(res.rows);
+        return res.rows;
+      })
+      .catch(err => {
+        console.error(err);
+        throw "Could not retrieve threads.";
+      });
   }
 
 }

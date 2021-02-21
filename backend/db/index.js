@@ -2,9 +2,9 @@ const { Pool } = require('pg');
 //const cs = "postgresql://postgres:droptablesallday@localhost:5432/hackchan";
 const pool = new Pool({
   user: 'postgres',
-  host: '127.0.0.1',
-  database: 'hackchan',
-  password: 'droptablesallday',
+  host: '172.17.0.2',
+  database: 'postgres',
+  password: 'pd',
   port: 5432
 
    //process.env.DATABASE_URL || process.env.LOCALDATABASE
