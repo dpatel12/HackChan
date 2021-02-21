@@ -3,22 +3,26 @@ const db = require('../db');
 
 
 module.exports = {
-  getThreadById: (id) => {
-    //
-    thread = {};
-    return thread;
-  },
-
   insertThread: (threadParent, threadChild) => {
     //db.query();
 
     if (false) {
-      throw "Could not insert thread into DB";
+      throw "Could not create new thread";
     }
   },
 
-  getThreads: (params) => {
-    //query
+  updateThread: (threadComment) => {
+    //db.query()
+
+    if (false) {
+      throw "Could not reply to existing thread";
+    }
+  },
+
+  getThreadsByLatest: (params) => {
+
+    let maxCount = params.maxCount;
+    //write query
     let threads = [];
     return threads;
   }

@@ -10,9 +10,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.post("/thread", messageController.postThread);
+app.post("/threads", messageController.postThread);
 app.get("/threads", messageController.getThreads);
-app.get("/thread/:id", messageController.getThread);
+app.put("/threads", messageController.updateThread);
 
 
 app.get("/*", (req, res) => {
