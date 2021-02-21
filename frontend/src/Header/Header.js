@@ -13,11 +13,6 @@ const Header = () => {
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="ml-auto">
                                 <Nav.Link href="#link"><h1>New Topic</h1></Nav.Link>
-                                <Nav.Link href="#link"><h1>Search Topic</h1></Nav.Link>
-                                <input type="text"/>
-                                <form method="post">
-                                <button variant = "lg"><h3>Submit!</h3></button>
-                                </form>
                                 
                             </Nav>
                         </Navbar.Collapse>
