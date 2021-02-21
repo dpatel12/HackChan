@@ -1,7 +1,7 @@
 import React, {  useState  } from 'react';
 
 import hlogo from './gif2.gif'; // gives image path
-import { Modal, Navbar, Nav, Button} from 'react-bootstrap';
+import { Form, Modal, Navbar, Nav, Button} from 'react-bootstrap';
 
 import './Header.css';
 import Request from '../components/requests/fetch';
