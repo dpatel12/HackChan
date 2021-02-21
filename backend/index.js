@@ -12,6 +12,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('trust proxy', true);
 
+/*
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
+*/
+
 app.post("/threads", messageController.postThread);
 app.get("/threads", messageController.getThreads);
 app.get("/threads/thread_id", messageController.getEntries);

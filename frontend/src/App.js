@@ -7,7 +7,7 @@ import './App.css';
 import ModalButton from './Content/ModalButton'
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-
+import Request from './components/requests/fetch';
 
 function App() {
   return (
@@ -15,7 +15,15 @@ function App() {
     <Header></Header>
      <ModalButton></ModalButton>
      <Footer></Footer>
+      <button onClick={() => {
+        Request.createNewComment({
+            parentTime: "2021-02-21T14:48:43.000Z",
+            text: "lol nerd git gud"
+        })
+        .then(r => console.log(r))
+        .catch(e => console.error(e));
 
+      }}>hi</button>
     </div>
 
 
