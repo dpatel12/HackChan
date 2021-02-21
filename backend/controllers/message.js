@@ -88,8 +88,6 @@ module.exports = {
 
     db.pool.query(queryString)
       .then(dbRes => {
-
-
           return res.status(200).json(dbRes.rows);
       })
       .catch(err => {
@@ -100,7 +98,9 @@ module.exports = {
 
   getEntries: (req, res) => {
     let maxCount = 50;
-    let threadTime = new Date(req.body.thread_time);
+    let processedTT = req.query.thread_time.replace("_", ":");
+    console.log(processedTT);
+    let threadTime = new Date(processedTT);
     let threadComment = [
       threadTime,
       maxCount
@@ -109,17 +109,8 @@ module.exports = {
     $1 ORDER BY comment_time DESC LIMIT $2;`;
     db.pool.query(queryString, threadComment)
       .then(dbRes => {
-        //console.log(dbRes.rows);
-        let resObject = {
-          thread_time: req.body.thread_time,
-          comments: dbRes.rows.map(element => {
-            return {
-              comment_time: element.comment_time,
-              comment_text: element.comment_text
-            }
-          })
-        };
-        return res.status(200).json(resObject);
+        console.log(dbRes.rows);
+        return res.status(200).json(dbRes.rows);
       })
       .catch(err => {
         console.error(err);
