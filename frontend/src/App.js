@@ -12,8 +12,11 @@ import Footer from './Footer/Footer';
 function App() {
   return (
   <div className="App">
+    <div id="wrap">
+      
     <Header></Header>
      <ModalButton></ModalButton>
+     </div>
      <Footer></Footer>
 
     </div>

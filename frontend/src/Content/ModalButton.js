@@ -9,6 +9,7 @@ function ModalButton() {
           "count": 10,
           "createdAt": "123456"
         },
+        
         {
           "title": "C# is superior language?",
           "count": 5,
@@ -41,9 +42,12 @@ function ModalButton() {
 
     let buttons = arrayOfThreads.map((x) => {
         return(
+            <center><p>
+                <div className="container">
         <Button variant="light" size="lg" active block id={x.createdAt} onClick={() => handleClick(x.createdAt, x.title, x.count)}>
             Thread: {x.title}
-        </Button>);
+        </Button> </div>
+        </p></center>);
         }
     );
 
