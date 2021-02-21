@@ -46,7 +46,7 @@ function ModalButton() {
             {buttons}
 
             <Modal
-                size="lg"
+                size="xl"
                 show={lgShow}
                 onHide={() => setLgShow(false)}
                 aria-labelledby="example-modal-sizes-title-lg"
