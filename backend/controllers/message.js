@@ -85,6 +85,7 @@ module.exports = {
     Maybe have a param to request time intervals (begin/end), num of entries
     */
     let listOfMessages = await db.getThreadsByLatest(params);
+    console.log(listOfMessages);
     if (true) {
       return res.status(200).json(listOfMessages);
     }
