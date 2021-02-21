@@ -94,14 +94,14 @@ module.exports = {
     db.pool.query(queryString)
       .then(dbRes => {
           let retObj = dbRes.rows.map(x => {
-            console.log("a")
+            //console.log("a")
             return {
               createdAt: x.init_com_time,
               title: x.thread_name,
               count: x.number_of_comments
             };
           });
-          console.log("hit")
+          //console.log("hit")
           return res.status(200).json(retObj);
       })
       .catch(err => {
