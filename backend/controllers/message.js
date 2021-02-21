@@ -1,31 +1,63 @@
-var { DateTime } = require('luxon')
+var { DateTime } = require('luxon');
+const db = require('../db/message');
 
 module.exports = {
   postThread: (req, res) => {
+    let createdAt = DateTime.now().toSQL();
+    let threadEntry = {
+      title: req.body.title,
+      firstCreatedAt: createdAt,
+      lastCreatedAt: createdAt
+    };
 
+    let threadBody = {
+      body: req.body.text,
+      timestamp: createdAt,
+      parentThreadTime: createdAt
+    };
     /*
     Message body:
     {
-      message: "string",
+      title: "string",
+      text: "string"
     }
-
-
     */
-    //generate timestamp
-    let createdAt = DateTime.now();
-    let insertObject = {
-      message: req.body.message,
-      timestamp: createdAt.toISO()
-    }
-    console.log(insertObject);
+
     //insert into DB
-    if (true) {
-      return res.status(200).json(insertObject);
+    try {
+      db.insertThread(threadEntry, threadBody);
+      return res.status(200).json(req.body);
+    } catch(e) {
+      console.error(e);
+      return res.status(500);
+    }
+  },
+
+  updateThread: (req, res) => {
+    let createdAt = DateTime.now().toSQL();
+    let threadBody = {
+      body: req.body.text,
+      timestamp: createdAt,
+      parentThreadTime: req.body.parentTime
+    }
+    try {
+      db.updateThread(threadComment);
+      return res.status(201);
+    } catch(e) {
+      console.error(e);
+      return res.status(500);
     }
   },
 
   getThreads: (req, res) => {
     //get messages from DB
+    let range = req.query.hasOwnProperty("max") ?
+    (req.query.max < 100 ? req.query.max : 100) :
+    50;
+    let params = {
+      range: reange
+    }
+
 
     /*
     [
@@ -39,7 +71,7 @@ module.exports = {
     Default number of threads (first 50? 100?)
     Maybe have a param to request time intervals (begin/end), num of entries
     */
-    let listOfMessages = [];
+    let listOfMessages = db.getThreads();
     if (true) {
       return res.status(200).json(listOfMessages);
     }
