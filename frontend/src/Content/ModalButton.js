@@ -1,9 +1,12 @@
-import React, {  useState  } from 'react';
+import React, { useEffect, useState  } from 'react';
 
 import { Form, Modal, Button } from 'react-bootstrap';
 import './Content.css';
+import Request from '../components/requests/fetch';
+
 function ModalButton() {
-    let arrayOfThreads = [
+    const [aOT, setAOT] = useState([]);
+    /*let arrayOfThreads = [
         {
           "title": "Best bedtime stories thread",
           "count": 10,
@@ -14,7 +17,12 @@ function ModalButton() {
           "count": 5,
           "createdAt": "987654321"
         }
-    ];
+    ];*/
+    useEffect(() => {
+        Request.getThreads()
+            .then(ret => {setAOT(ret)});
+
+    });
     
 
     const [lgShow, setLgShow] = useState(false);
@@ -47,8 +55,8 @@ function ModalButton() {
 
         );
     }
-
-    let buttons = arrayOfThreads.map((x) => {
+  
+    let buttons = aOT.map((x) => {
         return(
         <Button variant="light" size="lg" active block id={x.createdAt} onClick={() => handleClick(x.createdAt, x.title, x.count)}>
             Thread: {x.title}
@@ -57,7 +65,12 @@ function ModalButton() {
     );
 
     let handleSubmitReply = () => {
+        let threadTimeUnder = threadTime.replace(":",/_/g);
         console.log("submitted data:" + bodyInput);
+        Request.createNewComment({
+            'parentTime':threadTimeUnder,
+            'text':bodyInput
+        });
         setSubmitShow(false);
     }
 
