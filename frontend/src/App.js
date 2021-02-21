@@ -7,7 +7,7 @@ import './App.css';
 import ModalButton from './Content/ModalButton'
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-
+import Request from './components/requests/fetch';
 
 function App() {
   return (
@@ -18,10 +18,7 @@ function App() {
      <ModalButton></ModalButton>
      </div>
      <Footer></Footer>
-
-    </div>
-
-
+  </div>
   );
 
 }

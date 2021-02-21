@@ -1,9 +1,12 @@
-import React, {  useState  } from 'react';
+import React, { useEffect, useState  } from 'react';
 
-import { Modal, Button } from 'react-bootstrap';
+import { Form, Modal, Button } from 'react-bootstrap';
 import './Content.css';
+import Request from '../components/requests/fetch';
+
 function ModalButton() {
-    let arrayOfThreads = [
+    const [aOT, setAOT] = useState([]);
+    /*let arrayOfThreads = [
         {
           "title": "Best bedtime stories thread",
           "count": 10,
@@ -15,32 +18,63 @@ function ModalButton() {
           "count": 5,
           "createdAt": "987654321"
         }
-    ];
+    ];*/
+
     
 
     const [lgShow, setLgShow] = useState(false);
     const [submitShow, setSubmitShow] = useState(false);
     const [submitBody, setSubmitBody] = useState(false);
+    const [bodyInput, setBodyInput] = useState("");
+
+
     const [modalTitle, setModalTitle] = useState(false);
     const [modalBody, setModalBody] = useState(false);
     const [threadTime, setThreadTime] = useState(false);
     const [threadNumComments, setThreadNumComments] = useState(false);
     
     let handleClick = (time, threadname, threadcommentcount) =>  {
-        console.log(time);
+        let parentTimeUnder = time.replace(/:/g,"_");
+        console.log(parentTimeUnder)
         setLgShow(true);
         setModalTitle(threadname);
         setThreadTime(time);
-        setModalBody("Temp modal body");
+        Request.getCommentsForThread({"thread_time":parentTimeUnder})
+        .then(ret => setModalBody(
+            
+            ret.comments.map((x) => {
+                return(
+                    <p>Anon posted: {x.comment_text} at {x.comment_time}</p>
+                )
+            })
+
+        ));
+        
+        /*Request.getCommentsForThread({"thread_time":parentTimeUnder})
+            .then(ret => {setModalBody(
+            
+                ret
+
+
+            );
+            console.log(ret);
+        });*/
+        
         setThreadNumComments(threadcommentcount);
     };
 
     let openCommentModal = () => {
         setSubmitShow(true);
-        setSubmitBody("enter comment here later once text boxes come out");
-    }
+        setSubmitBody(
 
-    let buttons = arrayOfThreads.map((x) => {
+            <Form.Group>
+                <Form.Control size="lg" type="text" as="textarea" rows="5" placeholder="Enter body here" onInput={e => setBodyInput(e.target.value)}></Form.Control>
+            </Form.Group>
+
+        );
+    }
+  
+    let buttons = aOT.map((x) => {
         return(
             <center><p>
                 <div className="container">
@@ -52,10 +86,20 @@ function ModalButton() {
     );
 
     let handleSubmitReply = () => {
-        console.log("submitted data");
+        //let threadTimeUnder = threadTime.replace(/:/g,"_");
+        console.log("submitted data:" + bodyInput);
+        Request.createNewComment({
+            'parentTime':threadTime,
+            'text':bodyInput
+        });
         setSubmitShow(false);
     }
 
+    useEffect(() => {
+        Request.getThreads()
+            .then(ret => {setAOT(ret)});
+
+    }, [buttons]);
         
     return (
         <div id="mainBodyDiv">
@@ -76,7 +120,7 @@ function ModalButton() {
                     <Button variant="light" size="lg" active block onClick={() => openCommentModal()}>
                         Write a comment
                     </Button>
-                    
+                    <h4>Comments</h4>
                     {modalBody}
                     
                     
@@ -92,7 +136,7 @@ function ModalButton() {
             >
                 <Modal.Header closeButton>
                 <Modal.Title id="example-modal-sizes-title-lg">
-                    ID of current thread: {threadTime}
+                    Title of current thread: {modalTitle}
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -109,6 +153,8 @@ function ModalButton() {
             </Modal>
         </div>
     );
+
+
 };
 
 export default ModalButton;

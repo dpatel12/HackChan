@@ -26,7 +26,7 @@ Request body:
 Returns
 {
   "thread_time": "2021-02-21T07:08:18.657Z",
-  [
+  "comments": [
     {
       "comment_time": "2021-02-21T07:08:18.657Z",
       "comment_text": "bruh moment"

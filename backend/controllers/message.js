@@ -1,10 +1,11 @@
 const db = require('../db');
+const { DateTime } = require('luxon');
 
 module.exports = {
   postThread: (req, res) => {
     let createdAt = new Date();
     createdAt = createdAt.toUTCString();
-
+    console.log(req.body);
     let threadParent = [
       createdAt,
       createdAt,
@@ -39,7 +40,9 @@ module.exports = {
         db.pool.query(queryStringChild, threadChild)
           .then(dbRes1 => {
               console.log("innermost return statement");
-              return res.status(201).send("");
+              return res.status(201).json({
+                message: ""
+              });
           });
       })
       .catch(err => {
@@ -70,7 +73,9 @@ module.exports = {
       .then(dbRes => {
         db.pool.query(updateString, update)
           .then( () => {
-            return res.status(201).send("");
+            return res.status(200).json({
+              message: "not empty"
+            });
           });
       }).catch(err => {
         console.error(err);
@@ -88,9 +93,16 @@ module.exports = {
 
     db.pool.query(queryString)
       .then(dbRes => {
-
-
-          return res.status(200).json(dbRes.rows);
+          let retObj = dbRes.rows.map(x => {
+            //console.log("a")
+            return {
+              createdAt: x.init_com_time,
+              title: x.thread_name,
+              count: x.number_of_comments
+            };
+          });
+          //console.log("hit")
+          return res.status(200).json(retObj);
       })
       .catch(err => {
          console.error(err);
@@ -100,7 +112,9 @@ module.exports = {
 
   getEntries: (req, res) => {
     let maxCount = 50;
-    let threadTime = new Date(req.body.thread_time);
+    let parsedTime = req.query.thread_time.replace(/_/g, ":");
+    let threadTime = DateTime.fromISO(parsedTime).toJSDate();
+    console.log(threadTime);
     let threadComment = [
       threadTime,
       maxCount
@@ -109,17 +123,18 @@ module.exports = {
     $1 ORDER BY comment_time DESC LIMIT $2;`;
     db.pool.query(queryString, threadComment)
       .then(dbRes => {
-        //console.log(dbRes.rows);
-        let resObject = {
-          thread_time: req.body.thread_time,
-          comments: dbRes.rows.map(element => {
-            return {
-              comment_time: element.comment_time,
-              comment_text: element.comment_text
-            }
-          })
+        console.log(dbRes.rows);
+        let retObj = {
+          thread_time: parsedTime,
+          comments: []
         };
-        return res.status(200).json(resObject);
+        retObj.comments = dbRes.rows.map(x => {
+          return {
+            comment_time: x.comment_time,
+            comment_text: x.comment_text
+          };
+        })
+        return res.status(200).json(retObj);
       })
       .catch(err => {
         console.error(err);
