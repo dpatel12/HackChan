@@ -36,9 +36,10 @@ class Request {
 */
 
   async getCommentsForThread(timestamp) {
-    const response = await fetch(COMMENTS_URL, {
+    let url = new URL(COMMENTS_URL);
+    url.search = new URLSearchParams(timestamp).toString();
+    const response = await fetch(url);
 
-    });
     return response.json();
   }
 
