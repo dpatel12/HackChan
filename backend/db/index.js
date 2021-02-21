@@ -1,18 +1,16 @@
 const { Pool } = require('pg');
+const dotenv = require('dotenv').config();
 //const cs = "postgresql://postgres:droptablesallday@localhost:5432/hackchan";
 const pool = new Pool({
-  user: 'postgres',
-  host: '172.17.0.2',
-  database: 'postgres',
-  password: 'pd',
-  port: 5432
+  user: process.env.DB_USER,
+  host: process.env.DB_ADDRESS,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT
 
    //process.env.DATABASE_URL || process.env.LOCALDATABASE
 });
 
 module.exports = {
-  pool,
-  query: (queryString, params, callback) => {
-    return pool.query(queryString, params, callback);
-  }
+  pool
 }

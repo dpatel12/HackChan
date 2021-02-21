@@ -1,85 +1,84 @@
 var { DateTime } = require('luxon');
-const db = require('../dataAccess/message');
+//const db = require('../dataAccess/message');
+const db = require('../db');
 
 module.exports = {
-  postThread: async (req, res) => {
+  postThread: (req, res) => {
     let createdAt = DateTime.now().toSQL();
-    let threadEntry = {
+    let threadParent = {
       title: req.body.title,
       firstCreatedAt: createdAt,
       lastCreatedAt: createdAt
     };
 
-    let threadBody = {
+    let threadChild = {
       body: req.body.text,
       timestamp: createdAt,
       parentThreadTime: createdAt
     };
-    /*
-    Message body:
-    {
-      title: "string",
-      text: "string"
-    }
-    */
-
-    //insert into DB
-    try {
-      await db.insertThread(threadEntry, threadBody);
-      return res.status(200).json({
-        time: DateTime.now().toISO()
+    let queryStringParent = `INSERT INTO comment_thread VALUES (${threadParent.firstCreatedAt}, ${threadParent.lastCreatedAt}, '${threadParent.title}', 1);`;
+    let queryStringChild = `INSERT INTO comment_entry VALUES (${threadChild.timestamp}, '${threadChild.body}', ${threadChild.parentThreadTime});`;
+    db.pool.query(queryStringParent)
+      .then(dbRes => {
+        db.pool.query(queryStringChild)
+          .then(dbRes => {
+            return res.status(201);
+          });
+      })
+      .catch(err => {
+        console.error(err);
+        return res.status(500);
       });
-    } catch(e) {
-      console.error(e);
-      return res.status(500);
-    }
   },
 
-  updateThread: async (req, res) => {
+  updateThread: (req, res) => {
     let createdAt = DateTime.now().toSQL();
     let threadComment = {
       body: req.body.text,
       timestamp: createdAt,
       parentThreadTime: req.body.parentTime
     }
-    try {
-      await db.updateThread(threadComment);
-      return res.status(201);
-    } catch(e) {
-      console.error(e);
-      return res.status(500);
-    }
-  },
 
-  getThreads: async (req, res) => {
-
-    let params = {
-      maxCount: 50
-    }
-    db.getThreadsByLatest(params)
-      .then(listOfMessages => {
-        console.log(listOfMessages + "HEllo");
-        return res.status(200).json(listOfMessages);
-      })
-      .catch(err => {
+    let queryString = `INSERT INTO comment_entry VALUES (${threadComment.timestamp}, '${threadComment.body}', ${threadComment.parentThreadTime}); UPDATE comment_thread SET number_of_comments = number_of_comments + 1 WHERE init_com_time = ${threadComment.parentThreadTime});`;
+    db.pool.query(queryString)
+      .then(dbRes => {
+        return res.status(201);
+      }).catch(err => {
         console.error(err);
-      })
+        return res.status(500);
+      });
   },
 
 
-  getEntries: async (req, res) => {
+  getThreads: (req, res) => {
     let params = {
       maxCount: 50
-    }
+    };
+    let maxCount = params.maxCount;
+    let queryString = `SELECT * FROM comment_thread ORDER BY init_com_time DESC LIMIT ${maxCount};`;
+    console.log(queryString);
 
-    db.getThreadsByLatest(params, req.body.parentTime)
-      .then(listOfMessages => {
-        console.log(listOfMessages);
-        return res.status(200).json(listOfMessages);
+    db.pool.query(queryString)
+      .then(dbRes => {
+          return res.status(200).json(dbRes.rows);
+      })
+      .catch(err => {
+         console.error(err);
+         throw "Could not retrieve threads.";
+      });
+  },
+
+  getEntries: (req, res) => {
+    let maxCount = 50;
+    let queryString = `SELECT * FROM comment_entry WHERE parent_init_time = ${parent_time} ORDER BY comment_time DESC LIMIT ${maxCount};`;
+    db.pool.query(queryString)
+      .then(dbRes => {
+        console.log(dbRes.rows);
+        return res.status(200).json(dbRes.rows);
       })
       .catch(err => {
         console.error(err);
-      })
+      });
+  },
 
-  }
 }
