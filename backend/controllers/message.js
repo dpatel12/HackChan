@@ -103,7 +103,7 @@ module.exports = {
       threadTime,
       maxCount
     ];
-    let queryString = `SELECT * FROM comment_entry WHERE parent_init_time = 
+    let queryString = `SELECT * FROM comment_entry WHERE parent_init_time =
     $1 ORDER BY comment_time DESC LIMIT $2;`;
     db.pool.query(queryString, threadComment)
       .then(dbRes => {
