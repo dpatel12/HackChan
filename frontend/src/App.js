@@ -12,8 +12,11 @@ import Request from './components/requests/fetch';
 function App() {
   return (
   <div className="App">
+    <div id="wrap">
+      
     <Header></Header>
      <ModalButton></ModalButton>
+     </div>
      <Footer></Footer>
   </div>
   );

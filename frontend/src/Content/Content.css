@@ -1,3 +1,9 @@
 #mainBodyDiv {
     align-self: center;
+    background-color: snow;
+    position: relative;
+    margin: 0 auto;
+    width: 1212px;
+    height:550px;
+    min-height: 100%;
 }

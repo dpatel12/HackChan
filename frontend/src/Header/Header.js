@@ -1,6 +1,8 @@
 import React, {  useState  } from 'react';
-import hlogo from './logov2.png'; // gives image path
-import { Form, Modal, Navbar, Nav, Button} from 'react-bootstrap';
+
+import hlogo from './gif2.gif'; // gives image path
+import { Modal, Navbar, Nav, Button} from 'react-bootstrap';
+
 import './Header.css';
 import Request from '../components/requests/fetch';
 
@@ -49,8 +51,12 @@ function Header () {
                 <Navbar bg="primary" expand="lg">
                     <div className="container">
                         <Navbar.Brand href=""><img src={hlogo} alt="Logo Image" /></Navbar.Brand>
+                      
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
+                        <ul class="nav navbar-nav navbar-center">
+                        <li><h1>Welcome to HackChan</h1></li>
+        </ul>
                             <Nav className="ml-auto">
                                 <Nav.Link href="" onClick={() => handleClickHeader()}><h1>New Topic</h1></Nav.Link>
                                 

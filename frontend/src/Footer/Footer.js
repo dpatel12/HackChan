@@ -4,10 +4,9 @@ import './Footer.css';
 
 const Footer = () => {
     return (
-        <div>
-            <div className="Footer">
-                <p>&copy; Hackchan </p>
-            </div>
+        <div className="Footer">
+            <p>&copy; HackChan 2021</p>
+            <p>&copy; Oliver Xie, Brendan Saw, Samuel Jen, Jacob He</p>
         </div>
     );
 }

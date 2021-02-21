@@ -1,3 +1,8 @@
 .navbar-light .navbar-nav .nav-link {
     color: white !important;
 }
+.navbar-light .navbar-nav  {
+    position:relative;
+    text-align: center;
+    color: white !important;
+}
