@@ -1,0 +1,57 @@
+GET /api/threads
+
+[
+  {
+    "parent":
+    {
+      "title": "Best bedtime stories thread",
+      "count": 10,
+      "createdAt": "2021-02-20T17:20:18.975-08:00"
+    },
+    "comments":
+    [
+      {
+        "text": "Based and wholesomepilled",
+        "createdAt": "2021-02-20T17:20:18.975-08:00"
+      },
+      {
+        "text": "GME to the moon!!!:D",
+        "createdAt": "2021-02-21T17:20:18.975-08:00"
+      }
+    ]
+  }
+]
+
+Comments:
+- Returns a list of threads
+- Each thread contains a parent element and a comments element
+- Parent fields: title (string), count (int - number of comments),
+  createdAt (when the OP was created - ISO time format)
+- Each comment contains two fields: text (string), createdAt (when the comment
+  was created - ISO time format)
+RENDER THIS (BASICALLY ALL THREADS STORED IN DB)
+
+POST /api/threads
+
+{
+  "title": "How to get an entry level job in CS?",
+  "text": "4.33 GPA, top 1 global school, 5 internships, what should I put on my resume?"
+}
+
+Comments:
+- Both fields are strings
+- Server will generate the timestamp
+USED TO CREATE A NEW THREAD
+
+PUT /api/threads
+
+{
+  "parentTime": "2021-02-20T17:20:18.975-08:00",
+  "text": "Get a sense of humility and ask again tomorrow, nerd"
+}
+
+Comments:
+- parentTime is an ISO string corresponding to the createdAt field of a thread
+  (we decided to use timestamps as a primary key)
+- text is a string
+USED TO REPLY (CREATE A COMMENT) ON AN EXISTING THREAD
