@@ -1,6 +1,23 @@
 const THREADS_URL = "http://localhost:5000/threads";
 const COMMENTS_URL = "http://localhost:5000/threads/thread_id";
 
+/*
+Usage:
+import Request from 'PATH/TO/fetch';
+
+Request.createNewComment({
+    parentTime: "2021-02-21T14:48:43.000Z",
+    text: "lol nerd git gud"
+})
+.then(r => console.log(r))
+.catch(e => console.error(e));
+
+do stuff with r
+*/
+
+
+
+
 class Request {
   async getThreads() {
     const response = await fetch(THREADS_URL);
@@ -12,13 +29,20 @@ class Request {
     */
   }
 
+/*
+{
+  thread_time: "ISO TIMESTAMP WITH COLONS REPLACED BY UNDERSCORES"
+}
+*/
+
   async getCommentsForThread(timestamp) {
-    let url = new URL(COMMENTS_URL);
-    url.search = new URLSearchParams(timestamp).toString();
-    const response = await fetch(url);
+    const response = await fetch(COMMENTS_URL, {
+
+    });
     return response.json();
   }
 
+//see template.json
   async createNewThread(thread) {
       console.log(thread);
       const response = await fetch(THREADS_URL, {
@@ -31,6 +55,7 @@ class Request {
       return response.json();
   }
 
+//see template.json
   async createNewComment(comment) {
       console.log(comment)
       const response = await fetch(THREADS_URL, {

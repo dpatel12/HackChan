@@ -1,10 +1,11 @@
 const db = require('../db');
+const { DateTime } = require('luxon');
 
 module.exports = {
   postThread: (req, res) => {
     let createdAt = new Date();
     createdAt = createdAt.toUTCString();
-
+    console.log(req.body);
     let threadParent = [
       createdAt,
       createdAt,
@@ -39,7 +40,9 @@ module.exports = {
         db.pool.query(queryStringChild, threadChild)
           .then(dbRes1 => {
               console.log("innermost return statement");
-              return res.status(201).send("");
+              return res.status(201).json({
+                message: ""
+              });
           });
       })
       .catch(err => {
@@ -70,7 +73,9 @@ module.exports = {
       .then(dbRes => {
         db.pool.query(updateString, update)
           .then( () => {
-            return res.status(201).send("");
+            return res.status(200).json({
+              message: "not empty"
+            });
           });
       }).catch(err => {
         console.error(err);
@@ -98,9 +103,9 @@ module.exports = {
 
   getEntries: (req, res) => {
     let maxCount = 50;
-    let processedTT = req.query.thread_time.replace("_", ":");
-    console.log(processedTT);
-    let threadTime = new Date(processedTT);
+    let parsedTime = req.query.thread_time.replace(/_/g, ":");
+    let threadTime = DateTime.fromISO(parsedTime).toJSDate();
+    console.log(threadTime);
     let threadComment = [
       threadTime,
       maxCount

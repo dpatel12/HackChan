@@ -16,9 +16,8 @@ function App() {
      <ModalButton></ModalButton>
      <Footer></Footer>
       <button onClick={() => {
-        Request.createNewComment({
-            parentTime: "2021-02-21T14:48:43.000Z",
-            text: "lol nerd git gud"
+        Request.getCommentsForThread({
+            thread_time: "2021-02-21T14_48_43.000Z"
         })
         .then(r => console.log(r))
         .catch(e => console.error(e));
