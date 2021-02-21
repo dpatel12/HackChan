@@ -1,5 +1,4 @@
 var { DateTime } = require('luxon');
-//const db = require('../dataAccess/message');
 const db = require('../db');
 
 module.exports = {
@@ -49,7 +48,6 @@ module.exports = {
       });
   },
 
-
   getThreads: (req, res) => {
     let params = {
       maxCount: 50
@@ -64,7 +62,7 @@ module.exports = {
       })
       .catch(err => {
          console.error(err);
-         throw "Could not retrieve threads.";
+         return res.status(500);
       });
   },
 
@@ -78,6 +76,7 @@ module.exports = {
       })
       .catch(err => {
         console.error(err);
+        return res.status(500);
       });
   },
 
