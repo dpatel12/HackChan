@@ -18,6 +18,8 @@ function ModalButton() {
     
 
     const [lgShow, setLgShow] = useState(false);
+    const [submitShow, setSubmitShow] = useState(false);
+    const [submitBody, setSubmitBody] = useState(false);
     const [modalTitle, setModalTitle] = useState(false);
     const [modalBody, setModalBody] = useState(false);
     const [threadTime, setThreadTime] = useState(false);
@@ -25,12 +27,17 @@ function ModalButton() {
     
     let handleClick = (time, threadname, threadcommentcount) =>  {
         console.log(time);
-        setLgShow(true)
+        setLgShow(true);
         setModalTitle(threadname);
         setThreadTime(time);
         setModalBody("Temp modal body");
         setThreadNumComments(threadcommentcount);
     };
+
+    let openCommentModal = () => {
+        setSubmitShow(true);
+        setSubmitBody("enter comment here later once text boxes come out");
+    }
 
     let buttons = arrayOfThreads.map((x) => {
         return(
@@ -39,6 +46,11 @@ function ModalButton() {
         </Button>);
         }
     );
+
+    let handleSubmitReply = () => {
+        console.log("submitted data");
+        setSubmitShow(false);
+    }
 
         
     return (
@@ -56,7 +68,39 @@ function ModalButton() {
                     Thread ({threadTime}): {modalTitle} [{threadNumComments} replies]
                 </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{modalBody}</Modal.Body>
+                <Modal.Body>
+                    <Button variant="light" size="lg" active block onClick={() => openCommentModal()}>
+                        Write a comment
+                    </Button>
+                    
+                    {modalBody}
+                    
+                    
+                    
+                    
+                    </Modal.Body>
+            </Modal>
+            <Modal
+                size="xl"
+                show={submitShow}
+                onHide={() => setSubmitShow(false)}
+                aria-labelledby="example-modal-sizes-title-lg"
+            >
+                <Modal.Header closeButton>
+                <Modal.Title id="example-modal-sizes-title-lg">
+                    ID of current thread: {threadTime}
+                </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Body of new thread: {submitBody}
+                
+                    
+                    </Modal.Body>
+                    <Modal.Footer>
+                <Button variant="primary" onClick={() => handleSubmitReply()}>
+                    Submit
+                </Button>
+                </Modal.Footer>
 
             </Modal>
         </div>
