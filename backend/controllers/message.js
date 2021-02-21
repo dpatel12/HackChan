@@ -1,50 +1,80 @@
-var { DateTime } = require('luxon');
 const db = require('../db');
 
 module.exports = {
   postThread: (req, res) => {
-    let createdAt = DateTime.now().toSQL();
-    let threadParent = {
-      title: req.body.title,
-      firstCreatedAt: createdAt,
-      lastCreatedAt: createdAt
-    };
+    let createdAt = new Date();
+    createdAt = createdAt.toUTCString();
 
-    let threadChild = {
-      body: req.body.text,
-      timestamp: createdAt,
-      parentThreadTime: createdAt
-    };
-    let queryStringParent = `INSERT INTO comment_thread VALUES (${threadParent.firstCreatedAt}, ${threadParent.lastCreatedAt}, '${threadParent.title}', 1);`;
-    let queryStringChild = `INSERT INTO comment_entry VALUES (${threadChild.timestamp}, '${threadChild.body}', ${threadChild.parentThreadTime});`;
-    db.pool.query(queryStringParent)
+    let threadParent = [
+      createdAt,
+      createdAt,
+      req.body.title,
+      1
+    ];
+
+    let threadChild = [
+      createdAt,
+      req.body.text,
+      createdAt
+    ];
+    console.log(threadParent);
+    console.log(threadChild);
+    let queryStringParent = `INSERT INTO comment_thread
+    (
+      init_com_time,
+      recent_com_time,
+      thread_name,
+      number_of_comments
+    )
+    VALUES ($1, $2, $3, $4)`;
+    let queryStringChild = `INSERT INTO comment_entry
+    (
+      comment_time,
+      comment_text,
+      parent_init_time
+    )
+    VALUES ($1, $2, $3)`;
+    db.pool.query(queryStringParent, threadParent)
       .then(dbRes => {
-        db.pool.query(queryStringChild)
-          .then(dbRes => {
-            return res.status(201);
+        db.pool.query(queryStringChild, threadChild)
+          .then(dbRes1 => {
+              console.log("innermost return statement");
+              return res.status(201).send("");
           });
       })
       .catch(err => {
         console.error(err);
-        return res.status(500);
+        return res.status(500).send("");
       });
+
   },
 
   updateThread: (req, res) => {
-    let createdAt = DateTime.now().toSQL();
-    let threadComment = {
-      body: req.body.text,
-      timestamp: createdAt,
-      parentThreadTime: req.body.parentTime
-    }
-
-    let queryString = `INSERT INTO comment_entry VALUES (${threadComment.timestamp}, '${threadComment.body}', ${threadComment.parentThreadTime}); UPDATE comment_thread SET number_of_comments = number_of_comments + 1 WHERE init_com_time = ${threadComment.parentThreadTime});`;
-    db.pool.query(queryString)
+    let createdAt = new Date();
+    let parentDate = new Date(req.body.parentTime);
+    let threadComment = [
+      createdAt,
+      req.body.text,
+      parentDate
+    ];
+    let update = [ parentDate ];
+    let queryString = `INSERT INTO comment_entry
+    (
+      comment_time,
+      comment_text,
+      parent_init_time
+    )
+    VALUES ($1, $2, $3);`;
+    let updateString = `UPDATE comment_thread SET number_of_comments = number_of_comments + 1 WHERE init_com_time = $1;`;
+    db.pool.query(queryString, threadComment)
       .then(dbRes => {
-        return res.status(201);
+        db.pool.query(updateString, update)
+          .then( () => {
+            return res.status(201).send("");
+          });
       }).catch(err => {
         console.error(err);
-        return res.status(500);
+        return res.status(500).send("");
       });
   },
 
