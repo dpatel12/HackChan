@@ -18,11 +18,7 @@ function ModalButton() {
           "createdAt": "987654321"
         }
     ];*/
-    useEffect(() => {
-        Request.getThreads()
-            .then(ret => {setAOT(ret)});
 
-    });
     
 
     const [lgShow, setLgShow] = useState(false);
@@ -37,11 +33,32 @@ function ModalButton() {
     const [threadNumComments, setThreadNumComments] = useState(false);
     
     let handleClick = (time, threadname, threadcommentcount) =>  {
-        console.log(time);
+        let parentTimeUnder = time.replace(/:/g,"_");
+        console.log(parentTimeUnder)
         setLgShow(true);
         setModalTitle(threadname);
         setThreadTime(time);
-        setModalBody("Temp modal body");
+        Request.getCommentsForThread({"thread_time":parentTimeUnder})
+        .then(ret => setModalBody(
+            
+            ret.comments.map((x) => {
+                return(
+                    <p>Anon posted: {x.comment_text} at {x.comment_time}</p>
+                )
+            })
+
+        ));
+        
+        /*Request.getCommentsForThread({"thread_time":parentTimeUnder})
+            .then(ret => {setModalBody(
+            
+                ret
+
+
+            );
+            console.log(ret);
+        });*/
+        
         setThreadNumComments(threadcommentcount);
     };
 
@@ -65,15 +82,20 @@ function ModalButton() {
     );
 
     let handleSubmitReply = () => {
-        let threadTimeUnder = threadTime.replace(":",/_/g);
+        //let threadTimeUnder = threadTime.replace(/:/g,"_");
         console.log("submitted data:" + bodyInput);
         Request.createNewComment({
-            'parentTime':threadTimeUnder,
+            'parentTime':threadTime,
             'text':bodyInput
         });
         setSubmitShow(false);
     }
 
+    useEffect(() => {
+        Request.getThreads()
+            .then(ret => {setAOT(ret)});
+
+    }, [buttons]);
         
     return (
         <div id="mainBodyDiv">
@@ -94,7 +116,7 @@ function ModalButton() {
                     <Button variant="light" size="lg" active block onClick={() => openCommentModal()}>
                         Write a comment
                     </Button>
-                    
+                    <h4>Comments</h4>
                     {modalBody}
                     
                     
@@ -110,7 +132,7 @@ function ModalButton() {
             >
                 <Modal.Header closeButton>
                 <Modal.Title id="example-modal-sizes-title-lg">
-                    ID of current thread: {threadTime}
+                    Title of current thread: {modalTitle}
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -127,6 +149,8 @@ function ModalButton() {
             </Modal>
         </div>
     );
+
+
 };
 
 export default ModalButton;

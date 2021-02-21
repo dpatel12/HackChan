@@ -2,6 +2,7 @@ import React, {  useState  } from 'react';
 import hlogo from './logov2.png'; // gives image path
 import { Form, Modal, Navbar, Nav, Button} from 'react-bootstrap';
 import './Header.css';
+import Request from '../components/requests/fetch';
 
 function Header () {
     const [lgShow, setLgShow] = useState(false);
@@ -35,6 +36,10 @@ function Header () {
 
     let handleSubmitNew = () => {
         console.log("submitted data:" + titleInput + ", " + bodyInput);
+        Request.createNewThread({
+            'title':titleInput,
+            'text':bodyInput
+        });
         setLgShow(false)
     }
 
