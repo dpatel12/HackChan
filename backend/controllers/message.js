@@ -124,7 +124,17 @@ module.exports = {
     db.pool.query(queryString, threadComment)
       .then(dbRes => {
         console.log(dbRes.rows);
-        return res.status(200).json(dbRes.rows);
+        let retObj = {
+          thread_time: parsedTime,
+          comments: []
+        };
+        retObj.comments = dbRes.rows.map(x => {
+          return {
+            comment_time: x.comment_time,
+            comment_text: x.comment_text
+          };
+        })
+        return res.status(200).json(retObj);
       })
       .catch(err => {
         console.error(err);
