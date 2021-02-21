@@ -1,3 +1,7 @@
+const db = require('../db');
+// callbacks :)
+
+
 module.exports = {
   getThreadById: (id) => {
     //
@@ -6,8 +10,8 @@ module.exports = {
   },
 
   insertThread: (threadParent, threadChild) => {
+    //db.query();
 
-    
     if (false) {
       throw "Could not insert thread into DB";
     }

@@ -1,5 +1,5 @@
 var { DateTime } = require('luxon');
-const db = require('../db/message');
+const db = require('../dataAccess/message');
 
 module.exports = {
   postThread: (req, res) => {
@@ -55,7 +55,7 @@ module.exports = {
     (req.query.max < 100 ? req.query.max : 100) :
     50;
     let params = {
-      range: reange
+      range: range
     }
 
 
