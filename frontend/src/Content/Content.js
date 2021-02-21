@@ -43,6 +43,7 @@ const Content = () => {
     return (
         <div id="mainBodyDiv">
             {buttons}
+
         </div>
     
     );

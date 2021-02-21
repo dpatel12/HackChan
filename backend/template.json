@@ -2,43 +2,48 @@ GET /api/threads
 
 [
   {
-    "parent":
-    {
-      "title": "Best bedtime stories thread",
-      "count": 10,
-      "createdAt": "2021-02-20T17:20:18.975-08:00"
-    },
-    "comments":
-    [
-      {
-        "text": "Based and wholesomepilled",
-        "createdAt": "2021-02-20T17:20:18.975-08:00"
-      },
-      {
-        "text": "GME to the moon!!!:D",
-        "createdAt": "2021-02-21T17:20:18.975-08:00"
-      }
-    ]
+    "title": "Best bedtime stories thread",
+    "count": 10,
+    "createdAt": "2021-02-21T07:08:18.657Z"
+  },
+  {
+    "title": "C# is superior language?",
+    "count": 5,
+    "createdAt": "2021-02-21T07:08:18.657Z"
   }
 ]
 
-Comments:
 - Returns a list of threads
-- Each thread contains a parent element and a comments element
-- Parent fields: title (string), count (int - number of comments),
-  createdAt (when the OP was created - ISO time format)
-- Each comment contains two fields: text (string), createdAt (when the comment
-  was created - ISO time format)
-RENDER THIS (BASICALLY ALL THREADS STORED IN DB)
+- NO COMMENTS INCLUDED
 
 GET /api/threads/thread_id
 
+Request body:
 {
-  "thread_time": "2021-02-20T17:20:18.975-08:00"
+  "thread_time": "2021-02-21T07:08:18.657Z"
 }
 
+Returns
+{
+  "thread_time": "2021-02-21T07:08:18.657Z",
+  [
+    {
+      "comment_time": "2021-02-21T07:08:18.657Z",
+      "comment_text": "bruh moment"
+    },
+    {
+      "comment_time": "2021-02-21T07:08:18.657Z",
+      "comment_text": ">be fourteen\n>miss"
+    }
+  ]
+}
+
+
 Comments:
-- Returns a list of entries, when the thread is clicked on
+- Returns the parent thread timestamp + list of comments for that thread
+- Each comment contains two fields: comment_text (string), comment_time (when the comment
+  was created - ISO time format)
+RENDER THIS (ALL COMMENTS (max 50) FOR A THREAD)
 
 POST /api/threads
 
