@@ -49,50 +49,24 @@ module.exports = {
       });
   },
 
+
   getThreads: (req, res) => {
     let params = {
       maxCount: 50
     };
     let maxCount = params.maxCount;
-      let queryString = `SELECT * FROM comment_thread ORDER BY init_com_time DESC LIMIT ${maxCount};`;
-      console.log(queryString);
+    let queryString = `SELECT * FROM comment_thread ORDER BY init_com_time DESC LIMIT ${maxCount};`;
+    console.log(queryString);
 
-      db.pool.query(queryString)
-        .then(dbRes => {
+    db.pool.query(queryString)
+      .then(dbRes => {
           return res.status(200).json(dbRes.rows);
-        })
-        .catch(err => {
-          console.error(err);
-          throw "Could not retrieve threads.";
-        });
-
-    /*
-    db.getThreadsByLatest(params)
-      .then(listOfMessages => {
-        console.log(listOfMessages + "HEllo");
-        return res.status(200).json(listOfMessages);
       })
       .catch(err => {
-        console.error(err);
+         console.error(err);
+         throw "Could not retrieve threads.";
       });
-      */
   },
-
-
-  /*
-  getThread: (req, res) => {
-      //Execute SELECT DB query for a specific thread by timestamp
-      let threadID = req.params.id;
-      let thread = {
-        id: threadID
-      };
-      if (true) {
-        return res.status(200).json(thread);
-      } else {
-        return res.status(404);
-      }
-  }
-  */
 
   getEntries: (req, res) => {
     let maxCount = 50;
@@ -105,6 +79,6 @@ module.exports = {
       .catch(err => {
         console.error(err);
       });
+  },
 
-  }
 }
