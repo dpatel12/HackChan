@@ -31,6 +31,15 @@ Comments:
   was created - ISO time format)
 RENDER THIS (BASICALLY ALL THREADS STORED IN DB)
 
+GET /api/threads/thread_id
+
+{
+  "thread_time": "2021-02-20T17:20:18.975-08:00"
+}
+
+Comments:
+- Returns a list of entries, when the thread is clicked on
+
 POST /api/threads
 
 {

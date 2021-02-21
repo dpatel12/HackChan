@@ -12,9 +12,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('trust proxy', true);
 
-
 app.post("/threads", messageController.postThread);
 app.get("/threads", messageController.getThreads);
+app.get("/threads/thread_id", messageController.getEntries);
 app.put("/threads", messageController.updateThread);
 
 
