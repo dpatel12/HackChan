@@ -2,7 +2,7 @@ var { DateTime } = require('luxon');
 const db = require('../dataAccess/message');
 
 module.exports = {
-  postThread: (req, res) => {
+  postThread: async (req, res) => {
     let createdAt = DateTime.now().toSQL();
     let threadEntry = {
       title: req.body.title,
@@ -25,7 +25,7 @@ module.exports = {
 
     //insert into DB
     try {
-      db.insertThread(threadEntry, threadBody);
+      await db.insertThread(threadEntry, threadBody);
       return res.status(200).json({
         time: DateTime.now().toISO()
       });
@@ -35,7 +35,7 @@ module.exports = {
     }
   },
 
-  updateThread: (req, res) => {
+  updateThread: async (req, res) => {
     let createdAt = DateTime.now().toSQL();
     let threadComment = {
       body: req.body.text,
@@ -43,7 +43,7 @@ module.exports = {
       parentThreadTime: req.body.parentTime
     }
     try {
-      db.updateThread(threadComment);
+      await db.updateThread(threadComment);
       return res.status(201);
     } catch(e) {
       console.error(e);
@@ -51,7 +51,7 @@ module.exports = {
     }
   },
 
-  getThreads: (req, res) => {
+  getThreads: async (req, res) => {
     //get messages from DB
     //TODO: add support for query strings to tailor DB SELECT
     /*
@@ -84,7 +84,7 @@ module.exports = {
     Default number of threads (first 50? 100?)
     Maybe have a param to request time intervals (begin/end), num of entries
     */
-    let listOfMessages = db.getThreadsByLatest(params);
+    let listOfMessages = await db.getThreadsByLatest(params);
     if (true) {
       return res.status(200).json(listOfMessages);
     }
@@ -106,12 +106,12 @@ module.exports = {
   }
   */
 
-  getEntries: (req, res) => {
+  getEntries: async (req, res) => {
     let params = {
       maxCount: 50
     }
 
-    let listOfMessages = db.getEntriesByLatest(params, req.body.parentTime);
+    let listOfMessages = await db.getEntriesByLatest(params, req.body.parentTime);
     if (true) {
       return res.status(200).json(listOfMessages);
     }

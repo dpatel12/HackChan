@@ -2,7 +2,7 @@ const db = require('../db');
 // callbacks :)
 
 module.exports = {
-  insertThread: (threadParent, threadChild) => {
+  insertThread: async (threadParent, threadChild) => {
     /*
     let threadParent = {
       title: req.body.title,
@@ -19,7 +19,7 @@ module.exports = {
 
 
     let queryString = `INSERT INTO comment_thread VALUES (${threadParent.firstCreatedAt}, ${threadParent.lastCreatedAt}, '${threadParent.title}', 1); INSERT INTO comment_entry VALUES (${threadChild.timestamp}, '${threadChild.body}', ${threadChild.parentThreadTime});`;
-    db.query(queryString, (err, res) => {
+    await db.query(queryString, (err, res) => {
       if (err) {
         throw "Could not create new thread";
       }
@@ -27,7 +27,7 @@ module.exports = {
 
   },
 
-  updateThread: (threadComment) => {
+  updateThread: async (threadComment) => {
     /*
     let threadComment = {
       body: req.body.text,
@@ -36,18 +36,18 @@ module.exports = {
     }
     */
     let queryString = `INSERT INTO comment_entry VALUES (${threadComment.timestamp}, '${threadComment.body}', ${threadComment.parentThreadTime}); UPDATE comment_thread SET number_of_comments = number_of_comments + 1 WHERE init_com_time = ${threadComment.parentThreadTime});`;
-    db.query(queryString, (err, res) => {
+    await db.query(queryString, (err, res) => {
       if (err) {
         throw "Could not reply to existing thread";
       }
     });
   },
 
-  getThreadsByLatest: (params) => {
+  getThreadsByLatest: async (params) => {
 
     let maxCount = params.maxCount;
     let queryString = `SELECT * FROM comment_thread ORDER BY parent_init_time DESC LIMIT ${maxCount};`;
-    db.query(queryString, (err, res) => {
+    await db.query(queryString, (err, res) => {
       if (err) {
         throw "Could not retrieve threads.";
       }
@@ -58,11 +58,11 @@ module.exports = {
     });
   },
 
-  getEntriesByLatest: (params, parent_time) => {
+  getEntriesByLatest: async (params, parent_time) => {
 
     let maxCount = params.maxCount;
     let queryString = `SELECT * FROM comment_thread WHERE parent_init_time = ${parent_time} ORDER BY comment_time DESC LIMIT ${maxCount};`;
-    db.query(queryString, (err, res) => {
+    await db.query(queryString, (err, res) => {
       if (err) {
         throw "Could not retrieve entries.";
       }

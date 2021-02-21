@@ -1,7 +1,7 @@
 const pg = require('pg');
 
 const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL || process.env.LOCALDATABASE
+  connectionString: "postgresql://postgres:pd@localhost:5432/postgres" || process.env.DATABASE_URL || process.env.LOCALDATABASE
 });
 
 module.exports = {
