@@ -1,45 +1,25 @@
-import { Component } from 'react';
-import Topics from './components/Topics';
-import logo from './logo.png';
+
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import hlogo from './HackChan_Logo.png'; // gives image path
 import './App.css';
+import Content from './Content/Content';
+import Header from './Header/Header';
+import Footer from './Footer/Footer';
 
 
-class App extends Component{
-  state={
-    topics: [
-      {
-        id:1, 
-        title:"Minecraft World!! ",
-        reply:10
-      },
-      {
-        id:2, 
-        title:"Work-out tips",
-        reply: 5
-      },
-      {
-        id:3, 
-        title:"Home-cleaning discussion",
-        reply: 3
-      },
-      {
-        id:4, 
-        title:"COVID-19 Updates",
-        reply: 2
-      }
-    ]
-  }
+function App() {
+  return (
+  <div className="App">
+    <Header></Header>
+     <Content></Content>
+     <Footer></Footer>
 
-  render(){
-    console.log(this.state.topics)
-    return (
-      <div className="App">
-        <h1 style={{color: "#b38aff"}}>Welcome to HackChan</h1>
-        
-          <Topics topics={this.state.topics}/>
-        </div>
-    );
-  }
+    </div>
+
+
+  );
+
 }
 
 export default App;
