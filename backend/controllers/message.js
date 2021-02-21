@@ -88,7 +88,7 @@ module.exports = {
     if (true) {
       return res.status(200).json(listOfMessages);
     }
-  }
+  },
 
 
   /*
@@ -105,4 +105,15 @@ module.exports = {
       }
   }
   */
+
+  getEntries: (req, res) => {
+    let params = {
+      maxCount: 50
+    }
+
+    let listOfMessages = db.getEntriesByLatest(params, req.body.parentTime);
+    if (true) {
+      return res.status(200).json(listOfMessages);
+    }
+  }
 }
