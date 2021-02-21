@@ -1,22 +1,40 @@
 import React, {  useState  } from 'react';
 import hlogo from './logov2.png'; // gives image path
-import { Modal, Navbar, Nav, Button} from 'react-bootstrap';
+import { Form, Modal, Navbar, Nav, Button} from 'react-bootstrap';
 import './Header.css';
 
 function Header () {
     const [lgShow, setLgShow] = useState(false);
     const [modalTitle, setModalTitle] = useState(false);
     const [modalBody, setModalBody] = useState(false);
+    const [titleInput, setTitleInput] = useState("");
+    const [bodyInput, setBodyInput] = useState("");
+//<input value = {titleInput} onInput={e => setTitleInput(e.target.value)}></input>
     let handleClickHeader = () =>  {
         console.log("New topic clicked");
         setLgShow(true);
-        setModalTitle("new title");
-        setModalBody("new body");
+        setModalTitle(
+        
+        <Form.Group>
+            <Form.Control size="lg" type="text" placeholder="Enter title here" onInput={e => setTitleInput(e.target.value)}></Form.Control>
+        </Form.Group>
+        
+        );
+
+        //<input value = {bodyInput} onInput={e => setBodyInput(e.target.value)}></input>
+        setModalBody(
+
+        <Form.Group>
+            <Form.Control size="lg" type="text" as="textarea" rows="5" placeholder="Enter body here" onInput={e => setBodyInput(e.target.value)}></Form.Control>
+        </Form.Group>
+        
+
+        );
 
     };
 
     let handleSubmitNew = () => {
-        console.log("submitted data");
+        console.log("submitted data:" + titleInput + ", " + bodyInput);
         setLgShow(false)
     }
 
@@ -45,10 +63,14 @@ function Header () {
             >
                 <Modal.Header closeButton>
                 <Modal.Title id="example-modal-sizes-title-lg">
-                    New Thread: {modalTitle}
+                    Create a new thread: {modalTitle}
                 </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{modalBody}</Modal.Body>
+                <Modal.Body>
+                    Write the first comment for the thread:
+                    {modalBody}
+                    
+                    </Modal.Body>
                 <Modal.Footer>
                 <Button variant="primary" onClick={() => handleSubmitNew()}>
                     Submit

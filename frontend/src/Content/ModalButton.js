@@ -1,6 +1,6 @@
 import React, {  useState  } from 'react';
 
-import { Modal, Button } from 'react-bootstrap';
+import { Form, Modal, Button } from 'react-bootstrap';
 import './Content.css';
 function ModalButton() {
     let arrayOfThreads = [
@@ -20,6 +20,9 @@ function ModalButton() {
     const [lgShow, setLgShow] = useState(false);
     const [submitShow, setSubmitShow] = useState(false);
     const [submitBody, setSubmitBody] = useState(false);
+    const [bodyInput, setBodyInput] = useState("");
+
+
     const [modalTitle, setModalTitle] = useState(false);
     const [modalBody, setModalBody] = useState(false);
     const [threadTime, setThreadTime] = useState(false);
@@ -36,7 +39,13 @@ function ModalButton() {
 
     let openCommentModal = () => {
         setSubmitShow(true);
-        setSubmitBody("enter comment here later once text boxes come out");
+        setSubmitBody(
+
+            <Form.Group>
+                <Form.Control size="lg" type="text" as="textarea" rows="5" placeholder="Enter body here" onInput={e => setBodyInput(e.target.value)}></Form.Control>
+            </Form.Group>
+
+        );
     }
 
     let buttons = arrayOfThreads.map((x) => {
@@ -48,7 +57,7 @@ function ModalButton() {
     );
 
     let handleSubmitReply = () => {
-        console.log("submitted data");
+        console.log("submitted data:" + bodyInput);
         setSubmitShow(false);
     }
 
