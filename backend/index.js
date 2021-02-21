@@ -28,8 +28,7 @@ app.put("/threads", messageController.updateThread);
 
 
 app.get("/*", (req, res) => {
-  req.headers['x-forwarded-for'];
-  res.send("IP FOUND: " + req.socket.remoteAddress);
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 
 });
 
