@@ -1,5 +1,5 @@
-const THREADS_URL = "http://localhost:5000/threads";
-const COMMENTS_URL = "http://localhost:5000/threads/thread_id";
+const THREADS_URL = "http://hackchan.tech/threads";
+const COMMENTS_URL = "http://hackchan.tech/threads/thread_id";
 
 /*
 Usage:
