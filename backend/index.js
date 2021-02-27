@@ -5,7 +5,7 @@ const messageController = require('./controllers/message');
 const dotenv = require('dotenv').config();
 const path = require('path');
 
-let NODE_PORT = 5000;
+let NODE_PORT = process.env.PORT || 5000;
 let app = express();
 
 app.use(cors());
