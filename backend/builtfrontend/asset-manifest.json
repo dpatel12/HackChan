@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a364fd95.chunk.css",
+    "main.js": "/static/js/main.9922078d.chunk.js",
+    "main.js.map": "/static/js/main.9922078d.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.50a65ca0.js",
+    "runtime-main.js.map": "/static/js/runtime-main.50a65ca0.js.map",
+    "static/css/2.150d169a.chunk.css": "/static/css/2.150d169a.chunk.css",
+    "static/js/2.85513b81.chunk.js": "/static/js/2.85513b81.chunk.js",
+    "static/js/2.85513b81.chunk.js.map": "/static/js/2.85513b81.chunk.js.map",
+    "static/js/3.dff9007b.chunk.js": "/static/js/3.dff9007b.chunk.js",
+    "static/js/3.dff9007b.chunk.js.map": "/static/js/3.dff9007b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.150d169a.chunk.css.map": "/static/css/2.150d169a.chunk.css.map",
+    "static/css/main.a364fd95.chunk.css.map": "/static/css/main.a364fd95.chunk.css.map",
+    "static/js/2.85513b81.chunk.js.LICENSE.txt": "/static/js/2.85513b81.chunk.js.LICENSE.txt",
+    "static/media/HackChan_Logo.0b950b45.png": "/static/media/HackChan_Logo.0b950b45.png",
+    "static/media/gif2.f3acc5f4.gif": "/static/media/gif2.f3acc5f4.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.50a65ca0.js",
+    "static/css/2.150d169a.chunk.css",
+    "static/js/2.85513b81.chunk.js",
+    "static/css/main.a364fd95.chunk.css",
+    "static/js/main.9922078d.chunk.js"
+  ]
+}
