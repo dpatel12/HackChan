@@ -11,7 +11,7 @@ let app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, 'buildfrontend')));
+app.use(express.static(path.join(__dirname, 'builtfrontend')));
 app.set('trust proxy', true);
 
 /*
@@ -28,7 +28,7 @@ app.get("/threads/thread_id", messageController.getEntries);
 app.put("/threads", messageController.updateThread);
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'buildfrontend', 'index.html'))
+  res.sendFile(path.join(__dirname, 'builtfrontend', 'index.html'))
 });
 
 
