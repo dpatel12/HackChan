@@ -11,11 +11,11 @@ StormHacks 2021 submission!
 
 ## About
 
-HackChan is a totally anonymous message board, revolutionizing privacy in communication by not storing any user info at all!
+HackChan is a fully anonymous message board, revolutionizing privacy in communication by not storing any user info at all!
 
 ## Construction
 
-For most of us, StormHacks was our first time ever using Docker, Node, React, Postgres, and even HTML/CSS! We're really proud of what we could make in 24 hours!
+For most of us, StormHacks was our first time using Docker, Node, React, Postgres, and even HTML/CSS! We're extremely proud of what we could make in 24 hours!
 
 ## Accomplishments
 
@@ -24,7 +24,7 @@ For most of us, StormHacks was our first time ever using Docker, Node, React, Po
 
 ## Challenges
 
-1. Connecting from Node container to Postgres Docker container, took us a while but we prevailed :)
+1. Connecting from Node container to Postgres Docker container took us a while but we prevailed :)
 2. Defining the primary key for the comment threads - ended up using the timestamp
 3. Implementing the Express endpoints and using Fetch API to transfer data between frontend and backend
 4. Crafting React components, struggling with hooks, and figuring out other quirks of the JS browser runtime
